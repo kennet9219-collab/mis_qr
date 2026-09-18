@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Imágenes a QR</title>
+    <!-- Cargamos la librería para generar códigos QR -->
+    <script src="https://cloudflare.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 40px auto;
+            text-align: center;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+        }
+        .btn {
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        #uploadBtn {
+            background-color: #e67e22;
+        }
+        #downloadBtn {
+            background-color: #2ecc71;
+            display: none; /* Oculto hasta que se genere el QR */
+            margin-top: 15px;
+        }
+        button:disabled {
+            background-color: #bdc3c7 !important;
+            cursor: not-allowed;
+        }
+        #status {
+            margin: 15px 0;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        #qrcode {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Subir Imagen y Crear QR</h2>
+    <p>Selecciona una imagen. Se guardará de manera permanente y gratuita en ImgBB para generar tu código QR.</p>
+    
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="uploadBtn" class="btn" onclick="uploadImage()">Subir y Generar QR</button>
+    
+    <div id="status"></div>
+    <div id="qrcode"></div>
+    
+    <!-- Botón para descargar el QR -->
+    <button id="downloadBtn" class="btn" onclick="downloadQR()">⬇️ Descargar Código QR</button>
+</div>
+
+<script>
+    const IMGBB_API_KEY = '1fcd2ebfb50374081dca3a8a1edb4ca6';
+
+    async function uploadImage() {
+        const fileInput = document.getElementById('imageInput');
+        const statusDiv = document.getElementById('status');
+        const qrDiv = document.getElementById('qrcode');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        if (fileInput.files.length === 0) {
+            statusDiv.innerText = "❌ Por favor, selecciona una imagen primero.";
+            statusDiv.style.color = "red";
+            return;
+        }
+
+        statusDiv.innerText = "⏳ Procesando y subiendo imagen...";
+        statusDiv.style.color = "#e67e22";
+        qrDiv.innerHTML = ""; 
+        downloadBtn.style.display = "none"; 
+        uploadBtn.disabled = true;
+
+        // Tomamos el archivo seleccionado directamente de la lista
+        const file = fileInput.files[0];
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+            // Enviamos la petición POST directa a ImgBB
+            const response = await fetch(`https://imgbb.com{IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const imageUrl = data.data.url;
+                
+                statusDiv.innerHTML = `✅ ¡Subida con éxito!<br><br><a href="${imageUrl}" target="_blank">Ver enlace de la imagen</a>`;
+                statusDiv.style.color = "green";
+                
+                // Generamos el QR apuntando al enlace permanente
+                new QRCode(qrDiv, {
+                    text: imageUrl,
+                    width: 220,
+                    height: 220
+                });
+
+                // Mostramos el botón de descarga
+                setTimeout(() => {
+                    downloadBtn.style.display = "block";
+                }, 300);
+
+            } else {
+                statusDiv.innerText = "❌ ImgBB rechazó el archivo. Intenta con otra imagen.";
+                statusDiv.style.color = "red";
+            }
+        } catch (error) {
+            statusDiv.innerText = "❌ Error de conexión al subir el archivo.";
+            statusDiv.style.color = "red";
+            console.error(error);
+        } finally {
+            uploadBtn.disabled = false;
+        }
+    }
+
+    function downloadQR() {
+        const qrImage = document.querySelector('#qrcode img');
+        
+        if (qrImage) {
+            const link = document.createElement('a');
+            link.href = qrImage.src;
+            link.download = 'codigo-qr.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("No se encontró el código QR para descargar.");
+        }
+    }
+</script>
+
+</body>
+</html>
