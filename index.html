@@ -80,7 +80,7 @@
 <script>
     const IMGBB_API_KEY = '1fcd2ebfb50374081dca3a8a1edb4ca6';
 
-    function uploadImage() {
+    async function uploadImage() {
         const fileInput = document.getElementById('imageInput');
         const statusDiv = document.getElementById('status');
         const qrDiv = document.getElementById('qrcode');
@@ -99,54 +99,50 @@
         downloadBtn.style.display = "none"; 
         uploadBtn.disabled = true;
 
-        // Tomamos el archivo individual número 0 de la lista de forma nativa
+        // SOLUCIÓN: Agregamos [0] para enviar solo el archivo de la foto
         const file = fileInput.files[0];
 
         const formData = new FormData();
         formData.append('image', file);
 
-        // Usamos XMLHttpRequest clásico que evita problemas de compatibilidad de red con FormData
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', `https://imgbb.com{IMGBB_API_KEY}`, true);
+        try {
+            // Enviamos la petición POST directa a ImgBB
+            const response = await fetch(`https://imgbb.com{IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
 
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    const imageUrl = response.data.url;
-                    
-                    statusDiv.innerHTML = `✅ ¡Subida con éxito!<br><br><a href="${imageUrl}" target="_blank">Ver enlace de la imagen</a>`;
-                    statusDiv.style.color = "green";
-                    
-                    // Generamos el QR apuntando al enlace permanente
-                    new QRCode(qrDiv, {
-                        text: imageUrl,
-                        width: 220,
-                        height: 220
-                    });
+            const data = await response.json();
 
-                    // Mostramos el botón de descarga
-                    setTimeout(() => {
-                        downloadBtn.style.display = "block";
-                    }, 300);
-                } else {
-                    statusDiv.innerText = "❌ ImgBB rechazó el archivo. Intenta con otra imagen.";
-                    statusDiv.style.color = "red";
-                }
+            if (data.success) {
+                const imageUrl = data.data.url;
+                
+                statusDiv.innerHTML = `✅ ¡Subida con éxito!<br><br><a href="${imageUrl}" target="_blank">Ver enlace de la imagen</a>`;
+                statusDiv.style.color = "green";
+                
+                // Generamos el QR apuntando al enlace permanente
+                new QRCode(qrDiv, {
+                    text: imageUrl,
+                    width: 220,
+                    height: 220
+                });
+
+                // Mostramos el botón de descarga
+                setTimeout(() => {
+                    downloadBtn.style.display = "block";
+                }, 300);
+
             } else {
-                statusDiv.innerText = "❌ Error en el servidor de imágenes. Estado: " + xhr.status;
+                statusDiv.innerText = "❌ ImgBB rechazó el archivo. Intenta con otra imagen.";
                 statusDiv.style.color = "red";
             }
-            uploadBtn.disabled = false;
-        };
-
-        xhr.onerror = function () {
+        } catch (error) {
             statusDiv.innerText = "❌ Error de conexión al subir el archivo.";
             statusDiv.style.color = "red";
+            console.error(error);
+        } finally {
             uploadBtn.disabled = false;
-        };
-
-        xhr.send(formData);
+        }
     }
 
     function downloadQR() {
@@ -167,4 +163,5 @@
 
 </body>
 </html>
+
 
