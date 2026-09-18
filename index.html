@@ -99,7 +99,7 @@
         downloadBtn.style.display = "none"; 
         uploadBtn.disabled = true;
 
-        // Tomamos el archivo seleccionado directamente de la lista
+        // CORRECCIÓN AQUÍ: Tomamos el archivo individual número 0 de la lista
         const file = fileInput.files[0];
 
         const formData = new FormData();
