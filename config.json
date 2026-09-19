@@ -1,0 +1,10 @@
+{
+  "policiacoscarlos": {
+    "archivo": "policiacoscarlos.png",
+    "destino": "https://pagina-de-policias-ejemplo.com"
+  },
+  "penalesvilma": {
+    "archivo": "penalesvilma.jpg",
+    "destino": "https://pagina-de-penales-ejemplo.com"
+  }
+}
