@@ -2,9 +2,11 @@
   "policiacoscarlos": {
     "archivo": "bg-oj1.jpg",
     "destino": "https://portal.oj.gob.gt/"
+    "texto": "📄 Ver Expediente"
   },
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
     "destino": "https://www.youtube.com/"
+    "texto": "🔍 Consultar Historial"
   }
 }
