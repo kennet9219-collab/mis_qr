@@ -40,21 +40,17 @@
             background-color: #2563eb; 
             color: white; 
             text-decoration: none; 
-            padding: 16px 24px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            border-radius: 50px; 
-            margin-top: 25px; 
+            padding: 15px 20px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            margin-top: 20px; 
             width: 100%; 
             box-sizing: border-box; 
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); 
-            transition: all 0.3s ease; 
-            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2); 
         }
         .action-btn:hover { 
-            background-color: #1d4ed8; 
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35); 
-            transform: translateY(-1px); 
+            background-color: #27ae60; 
         }
         #errorMsg { 
             color: #e74c3c; 
@@ -69,7 +65,7 @@
 <div class="viewer-box">
     <div id="errorMsg">❌ No se encontró la información o imagen solicitada.</div>
     <img id="mainImage" src="" alt="Cargando..." style="display: none;">
-    <a id="redirectBtn" class="action-btn" href="#" target="_blank">🔗 Ver más información</a>
+    <a id="redirectBtn" class="action-btn" href="#" target="_blank">confirmar informscion</a>
 </div>
 
 <script>
@@ -90,25 +86,21 @@
         const baseUrl = `${window.location.protocol}//${window.location.host}${repoPath}`;
 
         try {
+            // Buscamos los datos de la foto en el archivo config.json
             const response = await fetch('config.json?v=' + new Date().getTime());
             const config = await response.json();
             
+            // Si la foto existe en nuestra lista
             if (config[fotoName]) {
                 const datosFoto = config[fotoName];
                 
+                // Cargamos la imagen guardada en GitHub usando su nombre de archivo real
                 mainImage.src = baseUrl + datosFoto.archivo;
                 mainImage.style.display = 'block';
                 
+                // Si configuraste una web de destino, activamos el botón verde
                 if (datosFoto.destino && datosFoto.destino.trim() !== "") {
                     redirectBtn.href = datosFoto.destino;
-                    
-                    // NUEVO: Si configuraste un texto personalizado, la página lo usa automáticamente
-                    if (datosFoto.texto && datosFoto.texto.trim() !== "") {
-                        redirectBtn.innerHTML = datosFoto.texto;
-                    } else {
-                        redirectBtn.innerHTML = "🔗 Ver más información"; // Texto por defecto
-                    }
-                    
                     redirectBtn.style.display = 'block';
                 }
             } else {
@@ -125,3 +117,4 @@
 
 </body>
 </html>
+
