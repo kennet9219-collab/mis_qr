@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Imagen</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            background-color: #f4f7f6; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .viewer-box { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            max-width: 500px; 
+            width: 100%;
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            box-sizing: border-box;
+        }
+        .viewer-box img { 
+            max-width: 100%; 
+            max-height: 65vh; 
+            border-radius: 8px; 
+            object-fit: contain; 
+        }
+        .action-btn { 
+            display: none; 
+            background-color: #2ecc71; 
+            color: white; 
+            text-decoration: none; 
+            padding: 15px 20px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            margin-top: 20px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2); 
+        }
+        .action-btn:hover { 
+            background-color: #27ae60; 
+        }
+        #errorMsg { 
+            color: #e74c3c; 
+            font-weight: bold; 
+            display: none; 
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="viewer-box">
+    <div id="errorMsg">❌ No se encontró la información o imagen solicitada.</div>
+    <img id="mainImage" src="" alt="Cargando..." style="display: none;">
+    <a id="redirectBtn" class="action-btn" href="#" target="_blank">🔗 Ver más información</a>
+</div>
+
+<script>
+    async function initViewer() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fotoName = urlParams.get('foto');
+        
+        const errorMsg = document.getElementById('errorMsg');
+        const mainImage = document.getElementById('mainImage');
+        const redirectBtn = document.getElementById('redirectBtn');
+
+        if (!fotoName) {
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        const repoPath = window.location.pathname.replace('ver.html', '');
+        const baseUrl = `${window.location.protocol}//${window.location.host}${repoPath}`;
+
+        try {
+            // Buscamos los datos de la foto en el archivo config.json
+            const response = await fetch('config.json?v=' + new Date().getTime());
+            const config = await response.json();
+            
+            // Si la foto existe en nuestra lista
+            if (config[fotoName]) {
+                const datosFoto = config[fotoName];
+                
+                // Cargamos la imagen guardada en GitHub usando su nombre de archivo real
+                mainImage.src = baseUrl + datosFoto.archivo;
+                mainImage.style.display = 'block';
+                
+                // Si configuraste una web de destino, activamos el botón verde
+                if (datosFoto.destino && datosFoto.destino.trim() !== "") {
+                    redirectBtn.href = datosFoto.destino;
+                    redirectBtn.style.display = 'block';
+                }
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        } catch (e) {
+            errorMsg.style.display = 'block';
+            console.error(e);
+        }
+    }
+
+    window.onload = initViewer;
+</script>
+
+</body>
+</html>
