@@ -35,25 +35,22 @@
             border-radius: 8px; 
             object-fit: contain; 
         }
+        /* Estilos base compartidos por todos los botones */
         .action-btn { 
             display: none; 
-            background-color: #2563eb; 
             color: white; 
             text-decoration: none; 
             padding: 16px 24px; 
             font-size: 16px; 
             font-weight: 600; 
-            border-radius: 50px; 
             margin-top: 25px; 
             width: 100%; 
             box-sizing: border-box; 
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); 
-            transition: all 0.3s ease; 
+            transition: all 0.25s ease; 
             letter-spacing: 0.5px;
         }
         .action-btn:hover { 
-            background-color: #1d4ed8; 
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35); 
+            opacity: 0.9;
             transform: translateY(-1px); 
         }
         #errorMsg { 
@@ -102,11 +99,17 @@
                 if (datosFoto.destino && datosFoto.destino.trim() !== "") {
                     redirectBtn.href = datosFoto.destino;
                     
-                    // NUEVO: Si configuraste un texto personalizado, la página lo usa automáticamente
+                    // Aplicamos el texto personalizado
                     if (datosFoto.texto && datosFoto.texto.trim() !== "") {
                         redirectBtn.innerHTML = datosFoto.texto;
+                    }
+
+                    // ¡MAGIA! Aplicamos el aspecto e instrucciones físicas personalizadas desde el JSON
+                    if (datosFoto.estilo && datosFoto.estilo.trim() !== "") {
+                        redirectBtn.style.cssText = datosFoto.estilo;
                     } else {
-                        redirectBtn.innerHTML = "🔗 Ver más información"; // Texto por defecto
+                        // Estilo por defecto si se te olvida poner uno en el JSON
+                        redirectBtn.style.cssText = "background-color: #2563eb; border-radius: 50px;";
                     }
                     
                     redirectBtn.style.display = 'block';
@@ -125,5 +128,6 @@
 
 </body>
 </html>
+
 
 
