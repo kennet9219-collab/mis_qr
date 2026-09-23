@@ -2,7 +2,8 @@
   "penales": {
     "archivo": "download.png",
     "destino": "https://portal.oj.gob.gt/",
-    "texto": "📄 Ver Expediente"
+    "texto": "📄 Ver Expediente",
+    "estilo": "background-color: #1e1e1e; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);"
   },
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
