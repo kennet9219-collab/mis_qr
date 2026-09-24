@@ -57,7 +57,7 @@
             opacity: 0.9;
             transform: translateY(-1px); 
         }
-        /* Estilos base para el botón de imagen (El tamaño y el fondo se le darán desde el config.json) */
+        /* 🔘 DISEÑO LIMPIO: La imagen del botón flota libremente sin óvalos ni fondos forzados */
         .img-btn {
             display: none;
             margin-top: 25px;
@@ -71,13 +71,15 @@
         .img-btn img {
             width: 100%;
             height: auto;
-            max-height: 100px; 
+            max-height: 120px; 
             object-fit: contain;
             box-sizing: border-box;
-            transition: all 0.25s ease;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
         }
         .img-btn:hover {
-            transform: scale(1.05); 
+            transform: scale(1.04); 
             opacity: 0.95;
         }
         #errorMsg { 
@@ -145,21 +147,12 @@
                         redirectImgBtn.href = datosFoto.destino;
                         btnImageSrc.src = baseUrl + datosFoto.imagen_boton;
                         
-                        // 🧠 ASIGNACIÓN DINÁMICA: Aplicamos las instrucciones de estilo del config.json directamente aquí
+                        // 🧠 CONTROL DE TAMAÑO INDEPENDIENTE: Solo le aplicamos el tamaño (width) que indiques en el JSON
                         if (datosFoto.estilo && datosFoto.estilo.trim() !== "") {
-                            // Separamos las propiedades: el ancho va al contenedor, el fondo va a la imagen interna
-                            const estilos = datosFoto.estilo.split(';');
-                            estilos.forEach(estilo => {
-                                if (estilo.includes('width')) {
-                                    redirectImgBtn.style.cssText += estilo + ';';
-                                } else {
-                                    btnImageSrc.style.cssText += estilo + ';';
-                                }
-                            });
+                            redirectImgBtn.style.cssText += datosFoto.estilo;
                         } else {
-                            // Estilo por defecto si se te olvida configurarlo en el JSON
-                            redirectImgBtn.style.width = "50%";
-                            btnImageSrc.style.cssText = "background-color: #2563eb; border-radius: 50px; padding: 10px 15px;";
+                            // Tamaño moderado por defecto si no pones nada en el JSON
+                            redirectImgBtn.style.width = "60%";
                         }
                         
                         redirectImgBtn.style.display = 'block';
@@ -190,5 +183,6 @@
 
 </body>
 </html>
+
 
 
