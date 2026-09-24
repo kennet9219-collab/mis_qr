@@ -6,7 +6,7 @@
     "estilo": "",
     "imagen_boton": "baneroj.jpg",
     "fondo": "bg_login.jpg",
-    "estilo": "width: 35%;"
+    "estilo": "width: 35%; mix-blend-mode: multiply;"
   },
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
