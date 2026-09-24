@@ -1,7 +1,7 @@
 {
   "penales": {
     "archivo": "download.png",
-    "destino": "https://pagina-de-policias-ejemplo.com",
+    "destino": "https://portal.oj.gob.gt/oauth/principal",
     "texto": "Regresar &nbsp;&nbsp;<i class=\"fa fa-reply\"></i>",
     "imagen_boton": "",
     "fondo": "bg_login.jpg",
