@@ -6,8 +6,7 @@
     "estilo": "",
     "imagen_boton": "",
     "fondo": "bg_login.jpg",
-    "estilo": "width: 35%; background-color: #ff9800; color: white; border-radius: 10px; padding: 16px 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2);"
-  },
+    "estilo": "width: 45%; background-color: #ff9800; color: white; border-radius: 12px; padding: 14px 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2); display: inline-flex; align-items: center; justify-content: center;"
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
     "destino": "https://www.youtube.com/",
