@@ -2,11 +2,11 @@
   "penales": {
     "archivo": "download.png",
     "destino": "https://portal.oj.gob.gt/",
-    "texto": "",
+    "texto": "Regresar ↩️",
     "estilo": "",
-    "imagen_boton": "baneroj.jpg",
+    "imagen_boton": "",
     "fondo": "bg_login.jpg",
-    "estilo": "width: 35%; mix-blend-mode: multiply;"
+    "estilo": "width: 45%; background-color: #ff9800; color: white; border-radius: 12px; padding: 14px 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2);"
   },
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
