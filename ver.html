@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizador de Imagen</title>
-    <!-- 🔤 LIBRERÍA ACTIVADA: Cargamos Font Awesome para que los iconos funcionen -->
+    <!-- LIBRERÍA ACTIVADA: Cargamos Font Awesome para que los iconos funcionen -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body { 
             font-family: Arial, sans-serif; 
             display: flex; 
             justify-content: center; 
-            align-items: center; 
+            align-items: flex-start; /* 🔄 CAMBIO: Alinea todo arriba en lugar de centrarlo verticalmente */
             min-height: 100vh; 
             margin: 0; 
             background-color: #f4f7f6; 
@@ -35,10 +35,11 @@
             flex-direction: column; 
             align-items: center; 
             box-sizing: border-box;
+            margin-top: 40px; /* 🔼 CAMBIO: Aquí controlas qué tan arriba queda todo el bloque (puedes bajarlo o subirlo cambiando este número) */
         }
         .viewer-box img.main-img { 
             max-width: 100%; 
-            max-height: 65vh; 
+            max-height: 60vh; 
             border-radius: 8px; 
             object-fit: contain; 
         }
@@ -51,6 +52,7 @@
             transition: all 0.25s ease; 
             letter-spacing: 0.5px;
             text-align: center;
+            margin-top: 35px; /* ↕️ CAMBIO: Separación más amplia entre la imagen y el botón de texto */
         }
         .action-btn:hover { 
             opacity: 0.9;
@@ -58,7 +60,7 @@
         }
         .img-btn {
             display: none;
-            margin-top: 25px;
+            margin-top: 35px; /* ↕️ CAMBIO: Separación más amplia entre la imagen y el botón de banner */
             text-decoration: none;
             transition: all 0.25s ease;
             background: transparent !important;
@@ -165,15 +167,15 @@
                     } else {
                         redirectBtn.href = datosFoto.destino;
                         
-                        // 🌟 CORRECCIÓN CRUCIAL: Cambiado innerText por innerHTML para dar soporte total a las flechas de Font Awesome
                         if (datosFoto.texto && datosFoto.texto.trim() !== "") {
                             redirectBtn.innerHTML = datosFoto.texto;
                         }
                         
                         if (datosFoto.estilo && datosFoto.estilo.trim() !== "") {
-                            redirectBtn.style.cssText = datosFoto.estilo;
+                            // Inyectar el margin-top de separación al estilo dinámico del JSON
+                            redirectBtn.style.cssText = datosFoto.estilo + "; margin-top: 35px;";
                         } else {
-                            redirectBtn.style.cssText = "background-color: #2563eb; border-radius: 50px; padding: 14px 20px;";
+                            redirectBtn.style.cssText = "background-color: #2563eb; border-radius: 50px; padding: 14px 20px; margin-top: 35px;";
                         }
                         redirectBtn.style.display = 'block';
                     }
@@ -192,6 +194,7 @@
 
 </body>
 </html>
+
 
 
 
