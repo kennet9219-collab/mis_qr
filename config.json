@@ -2,7 +2,7 @@
   "penales": {
     "archivo": "download.png",
     "destino": "https://portal.oj.gob.gt/",
-    "texto": "Regresar ↩️",
+    "texto": "Regresar <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' style='vertical-align: middle; margin-left: 8px; transform: scaleX(-1);'><path d='M3 7v6h6'/><path d='M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13'/></svg>",
     "estilo": "",
     "imagen_boton": "",
     "fondo": "bg_login.jpg",
