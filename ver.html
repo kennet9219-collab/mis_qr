@@ -12,9 +12,14 @@
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
-            background-color: #f4f7f6; 
+            background-color: #f4f7f6; /* Fondo gris claro por defecto */
+            background-position: center center; 
+            background-repeat: no-repeat; 
+            background-size: cover; 
+            background-attachment: fixed;
             padding: 20px; 
             box-sizing: border-box; 
+            transition: background 0.3s ease;
         }
         .viewer-box { 
             background: white; 
@@ -35,7 +40,6 @@
             border-radius: 8px; 
             object-fit: contain; 
         }
-        /* Estilos base para el botón de texto clásico */
         .action-btn { 
             display: none; 
             color: white; 
@@ -53,7 +57,6 @@
             opacity: 0.9;
             transform: translateY(-1px); 
         }
-        /* Estilos para cuando el botón es una imagen */
         .img-btn {
             display: none;
             margin-top: 25px;
@@ -63,7 +66,7 @@
         }
         .img-btn img {
             width: 100%;
-            max-height: 80px; /* Ajusta la altura máxima de tu banner botón */
+            max-height: 80px; 
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -86,10 +89,8 @@
     <div id="errorMsg">❌ No se encontró la información o imagen solicitada.</div>
     <img id="mainImage" class="main-img" src="" alt="Cargando..." style="display: none;">
     
-    <!-- Opción 1: Botón de texto clásico -->
     <a id="redirectBtn" class="action-btn" href="#" target="_blank">🔗 Ver más información</a>
     
-    <!-- Opción 2: Botón de imagen/banner personalizado -->
     <a id="redirectImgBtn" class="img-btn" href="#" target="_blank">
         <img id="btnImageSrc" src="" alt="Botón">
     </a>
@@ -124,18 +125,25 @@
                 mainImage.src = baseUrl + datosFoto.archivo;
                 mainImage.style.display = 'block';
                 
-                // Si el usuario configuró una dirección de destino
+                // 🎨 NUEVO: Si configuraste un fondo específico para esta foto, lo aplicamos al body
+                if (datosFoto.fondo && datosFoto.fondo.trim() !== "") {
+                    // Si pusiste una URL o nombre de archivo de imagen
+                    if (datosFoto.fondo.includes('.') || datosFoto.fondo.startsWith('http')) {
+                        const fondoUrl = datosFoto.fondo.startsWith('http') ? datosFoto.fondo : baseUrl + datosFoto.fondo;
+                        document.body.style.backgroundImage = `url('${fondoUrl}')`;
+                    } else {
+                        // Si solo pusiste un color (ej: #ff0000 o "blue")
+                        document.body.style.background = datosFoto.fondo;
+                    }
+                }
+                
                 if (datosFoto.destino && datosFoto.destino.trim() !== "") {
-                    
-                    // ¿Configuró una IMAGEN como botón?
                     if (datosFoto.imagen_boton && datosFoto.imagen_boton.trim() !== "") {
                         redirectImgBtn.href = datosFoto.destino;
                         btnImageSrc.src = baseUrl + datosFoto.imagen_boton;
-                        redirectImgBtn.style.display = 'block'; // Mostramos el botón imagen
+                        redirectImgBtn.style.display = 'block';
                     } else {
-                        // Si no hay imagen, usamos el botón de texto tradicional
                         redirectBtn.href = datosFoto.destino;
-                        
                         if (datosFoto.texto && datosFoto.texto.trim() !== "") {
                             redirectBtn.innerHTML = datosFoto.texto;
                         }
@@ -144,7 +152,7 @@
                         } else {
                             redirectBtn.style.cssText = "background-color: #2563eb; border-radius: 50px;";
                         }
-                        redirectBtn.style.display = 'block'; // Mostramos el botón texto
+                        redirectBtn.style.display = 'block';
                     }
                 }
             } else {
