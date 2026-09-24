@@ -1,12 +1,13 @@
 {
-  "penales": {
-    "archivo": "download.png",
-    "destino": "https://portal.oj.gob.gt/",
-    "texto": "Regresar <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' style='vertical-align: middle; margin-left: 10px;'><path d='M3 7v6h6'/><path d='M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13'/></svg>",
+   "policiacoscarlos": {
+    "archivo": "policiacoscarlos.png",
+    "destino": "https://pagina-de-policias-ejemplo.com",
+    "texto": "Regresar &nbsp;&nbsp;<i class='fa fa-mail-reply'></i>",
     "imagen_boton": "",
-    "fondo": "bg_login.jpg",
-    "estilo": "width: 45%; background-color: #ff9800; color: white; border-radius: 12px; padding: 14px 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2); display: inline-flex; align-items: center; justify-content: center;"
-    },
+    "fondo": "fondopantalla.jpg",
+    "estilo": "width: 45%; background-color: #ff9800; color: white; border-radius: 6px; padding: 14px 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.2); display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"
+  },
+
   "penalesvilma": {
     "archivo": "foto-oj3.jpg",
     "destino": "https://www.youtube.com/",
