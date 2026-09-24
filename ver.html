@@ -59,31 +59,37 @@
             opacity: 0.9;
             transform: translateY(-1px); 
         }
-        /* 🔘 CORRECCIÓN: Quitamos el fondo blanco, bordes y sombras del botón de imagen */
+               /* 🔘 CORRECCIÓN TOTAL: Forzamos la transparencia del botón de imagen */
         .img-btn {
             display: none;
             margin-top: 25px;
-            /* 📐 AQUÍ CONTROLAS EL TAMAÑO DEL BOTÓN: Cambia este porcentaje para hacerlo más grande o pequeño (ej: 80%, 60%) */
-            width: 85%; 
+            width: 85%; /* 📐 Puedes bajar este porcentaje si deseas encoger el botón (ej: 70%) o subirlo para agrandarlo */
             text-decoration: none;
             transition: all 0.25s ease;
-            background: transparent;
-            border: none;
-            padding: 0;
+            background: transparent !important; /* Elimina cualquier fondo heredado */
+            border: none !important; /* Elimina bordes fantasma */
+            outline: none !important;
+            padding: 0 !important;
+            box-shadow: none !important; /* Quita sombras que generen bloques blancos */
         }
         .img-btn img {
             width: 100%;
             height: auto;
-            max-height: 120px; /* Evita que se estire demasiado hacia arriba */
+            max-height: 120px; 
             object-fit: contain;
-            border-radius: 0px; /* Cambia a 8px si quieres que las esquinas de tu botón sean redondeadas */
-            box-shadow: none;
-            background: transparent;
+            border-radius: 0px; 
+            background: transparent !important; /* Fuerza transparencia interna */
+            box-shadow: none !important;
+            
+            /* ✨ TRUCO MÁGICO: Si tu imagen JPG tiene un fondo blanco físico, 
+               este código lo fusiona con el fondo de pantalla haciéndolo invisible */
+            mix-blend-mode: multiply; 
         }
         .img-btn:hover {
-            transform: scale(1.04); /* Sutil efecto de agrandamiento al tocarlo */
+            transform: scale(1.04); 
             opacity: 0.95;
         }
+
         #errorMsg { 
             color: #e74c3c; 
             font-weight: bold; 
